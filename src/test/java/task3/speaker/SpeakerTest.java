@@ -4,8 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import task3.RadioWaves;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SpeakerTest {
     private Speaker speaker;
@@ -58,5 +57,17 @@ public class SpeakerTest {
         speaker.configureVolume(loudVolume);
         String message = speaker.getSound().get(0);
         assertEquals(message, message.toUpperCase());
+    }
+
+    @Test
+    void turnOnTest() {
+        speaker.turnOn();
+        assertTrue(speaker.isOn());
+    }
+
+    @Test
+    void turnOffTest() {
+        speaker.turnOff();
+        assertFalse(speaker.isOn());
     }
 }

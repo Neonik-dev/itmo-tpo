@@ -28,13 +28,13 @@ public class RadioTransmitterTest {
     }
 
     @Test
-    void transmitSignalWhenOff() {
+    void transmitSignalWhenOffTest() {
         transmitter.configureFrequency(10);
         assertThrows(IllegalStateException.class, () -> transmitter.transmitSignal("123"));
     }
 
     @Test
-    void transmitSignalWhenOn() {
+    void transmitSignalWhenOnTest() {
         float frequency = 10;
         transmitter.turnOn();
         transmitter.configureFrequency(frequency);
@@ -44,9 +44,21 @@ public class RadioTransmitterTest {
     }
 
     @Test
-    void transmitSignalWhenOnAndFrequencyIsZero() {
+    void transmitSignalWhenOnAndFrequencyIsZeroTest() {
         transmitter.configureFrequency(0);
         transmitter.turnOn();
         assertThrows(IllegalStateException.class, () -> transmitter.transmitSignal("123"));
+    }
+
+    @Test
+    void turnOnTest() {
+        transmitter.turnOn();
+        assertTrue(transmitter.isOn());
+    }
+
+    @Test
+    void turnOffTest() {
+        transmitter.turnOff();
+        assertFalse(transmitter.isOn());
     }
 }
