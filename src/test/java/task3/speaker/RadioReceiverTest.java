@@ -35,4 +35,10 @@ public class RadioReceiverTest {
         List<String> messages = receiver.receiveSignal();
         assertEquals(1, messages.size());
     }
+
+    @Test
+    void calculateSignalStrengthTest() {
+        receiver.configureFrequency(123);
+        assertEquals(68.13157d, receiver.calculateSignalStrength(), 0.1E-4);
+    }
 }

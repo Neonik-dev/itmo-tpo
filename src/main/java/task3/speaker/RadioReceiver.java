@@ -6,9 +6,11 @@ import task3.RadioWaves;
 
 public class RadioReceiver {
     private float frequency;
+    private float power;
 
     public RadioReceiver() {
         frequency = 0.0f;
+        power = 10.0f;
     }
 
     protected void configureFrequency(float frequency) {
@@ -22,6 +24,7 @@ public class RadioReceiver {
         if (frequency == 0) {
             throw new IllegalStateException("Frequency can't be 0");
         }
+        if (calculateSignalStrength() < 10) return List.of(generateString(new Random(), new Random().nextInt(1, 100)));
 
         List<String> messages = RadioWaves.getInstance().getRadioWave(frequency);
         if (messages.isEmpty()) return List.of(generateString(new Random(), new Random().nextInt(1, 100)));
@@ -36,5 +39,14 @@ public class RadioReceiver {
             text[i] = characters.charAt(rng.nextInt(characters.length()));
         }
         return new String(text);
+    }
+
+    protected double calculateSignalStrength() {
+        double strength = 100 - Math.log10(frequency + 1) * 20 + power;
+        return Math.max(strength, 0);
+    }
+
+    public void configurePower(float power) {
+        this.power = power;
     }
 }
