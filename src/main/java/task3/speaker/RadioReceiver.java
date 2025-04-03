@@ -42,7 +42,7 @@ public class RadioReceiver {
     }
 
     protected double calculateSignalStrength() {
-        double strength = 100 - Math.log10(frequency + 1) * 20 + power;
+        double strength = Math.log10(frequency + 1) * (power);
         return Math.max(strength, 0);
     }
 

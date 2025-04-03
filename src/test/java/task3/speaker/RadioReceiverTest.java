@@ -39,6 +39,26 @@ public class RadioReceiverTest {
     @Test
     void calculateSignalStrengthTest() {
         receiver.configureFrequency(123);
-        assertEquals(68.13157d, receiver.calculateSignalStrength(), 0.1E-4);
+        assertEquals(20.93422d, receiver.calculateSignalStrength(), 0.1E-4);
+    }
+
+    @Test
+    void calculateSignalStrengthWithZeroFrequencyTest() {
+        receiver.configureFrequency(0);
+        assertEquals(0.0, receiver.calculateSignalStrength());
+    }
+
+    @Test
+    void calculateSignalStrengthWithZeroPowerTest() {
+        receiver.configureFrequency(100);
+        receiver.configurePower(0);
+        assertEquals(0.0, receiver.calculateSignalStrength());
+    }
+
+    @Test
+    void calculateSignalStrengthWithZeroAndFrequencyPowerTest() {
+        receiver.configureFrequency(0);
+        receiver.configurePower(0);
+        assertEquals(0.0, receiver.calculateSignalStrength());
     }
 }
