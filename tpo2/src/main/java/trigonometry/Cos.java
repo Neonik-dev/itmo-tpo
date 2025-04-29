@@ -12,7 +12,7 @@ public class Cos {
 
     public double compute(double x, double eps) {
         if (!validX(x)) {
-            throw new ArithmeticException("Wrong x");
+            throw new ArithmeticException("Неверный аргумент x");
         }
 
         x %= TWO_PI;
