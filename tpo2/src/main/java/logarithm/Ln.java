@@ -2,7 +2,7 @@ package logarithm;
 
 public class Ln {
     public double compute(double x, double eps) {
-        if (validX(x)) {
+        if (!validX(x)) {
             throw new IllegalArgumentException("Значение X не проходит валидацию");
         }
 
@@ -20,7 +20,7 @@ public class Ln {
     }
 
     public boolean validX(double x) {
-        if (!(Double.isNaN(x) || Double.isInfinite(x))) {
+        if (Double.isNaN(x) || Double.isInfinite(x)) {
             return false;
         }
         return x > 0;
