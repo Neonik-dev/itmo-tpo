@@ -1,10 +1,10 @@
 package equation;
 
 import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.List;
+
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -15,7 +15,7 @@ import utils.CsvOutput;
 
 import static org.junit.Assert.assertEquals;
 
-public class TrigonometrySolverTest {
+public class TrigonometricSolverTest {
     public static Sin sin = Mockito.mock(Sin.class);
     public static Cos cos = Mockito.mock(Cos.class);
     private static final CsvOutput csvOutput = new CsvOutput();
@@ -26,6 +26,7 @@ public class TrigonometrySolverTest {
         fillMockCos(cos);
     }
 
+    @SneakyThrows
     private static void fillMockSin(Sin tf) {
         try (CSVReader csvReader = new CSVReader(new FileReader("src/test/resources/trigonometryTestData/test-sin-data.csv"))) {
             List<String[]> lines = csvReader.readAll();
@@ -36,13 +37,10 @@ public class TrigonometrySolverTest {
 
                 Mockito.when(tf.compute(x * Math.PI / y, 0.001)).thenReturn(res);
             }
-        } catch (IOException e) {
-            System.out.println("io");
-        } catch (CsvException e) {
-            System.out.println("csv");
         }
     }
 
+    @SneakyThrows
     private static void fillMockCos(Cos tf) {
         try (CSVReader csvReader = new CSVReader(new FileReader("src/test/resources/trigonometryTestData/test-cos-data.csv"))) {
             List<String[]> lines = csvReader.readAll();
@@ -53,15 +51,12 @@ public class TrigonometrySolverTest {
 
                 Mockito.when(tf.compute(x * Math.PI / y, 0.001)).thenReturn(res);
             }
-        } catch (IOException e) {
-            System.out.println("io");
-        } catch (CsvException e) {
-            System.out.println("csv");
         }
     }
 
     private void runTest(TrigonometricSolver ts, Double divisible, Double divider, Double trueResult) {
-        double x = divisible * Math.PI / divider, result;
+        double x = divisible * Math.PI / divider;
+        double result;
         try {
             result = ts.compute(x, 0.001);
             csvOutput.logging(x, result);
@@ -75,8 +70,7 @@ public class TrigonometrySolverTest {
     @CsvFileSource(resources = "/trigonometryTestData/test-trig-func-data.csv")
     void isolatedFunctionTest(Double divisible, Double divider, Double trueResult) {
         csvOutput.setFilePath("src/test/resources/result/equation/trigonometrySolverAnswer.csv");
-        TrigonometricSolver trigonometricExpression
-                = new TrigonometricSolver(cos);
+        TrigonometricSolver trigonometricExpression = new TrigonometricSolver(cos);
         runTest(trigonometricExpression, divisible, divider, trueResult);
     }
 
@@ -84,8 +78,7 @@ public class TrigonometrySolverTest {
     @CsvFileSource(resources = "/trigonometryTestData/test-trig-func-data.csv")
     void cosTest(Double divisible, Double divider, Double trueResult) {
         csvOutput.setFilePath("src/test/resources/result/equation/trigonometrySolverAnswer.csv");
-        TrigonometricSolver trigonometricExpression
-                = new TrigonometricSolver(new Cos(sin));
+        TrigonometricSolver trigonometricExpression = new TrigonometricSolver(new Cos(sin));
         runTest(trigonometricExpression, divisible, divider, trueResult);
     }
 
@@ -93,8 +86,7 @@ public class TrigonometrySolverTest {
     @CsvFileSource(resources = "/trigonometryTestData/test-trig-func-data.csv")
     void fullTest(Double divisible, Double divider, Double trueResult) {
         csvOutput.setFilePath("src/test/resources/result/equation/trigonometrySolverAnswer.csv");
-        TrigonometricSolver trigonometricExpression
-                = new TrigonometricSolver(new Cos(new Sin()));
+        TrigonometricSolver trigonometricExpression = new TrigonometricSolver(new Cos(new Sin()));
         runTest(trigonometricExpression, divisible, divider, trueResult);
     }
 }
