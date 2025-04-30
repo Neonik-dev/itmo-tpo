@@ -27,7 +27,7 @@ public class TrigonometricSolverTest {
     }
 
     @SneakyThrows
-    private static void fillMockSin(Sin tf) {
+    private static void fillMockSin(Sin ts) {
         try (CSVReader csvReader = new CSVReader(new FileReader("src/test/resources/trigonometryTestData/test-sin-data.csv"))) {
             List<String[]> lines = csvReader.readAll();
             for (String[] line : lines) {
@@ -35,7 +35,7 @@ public class TrigonometricSolverTest {
                 double y = Double.parseDouble(line[1]);
                 double res = Double.parseDouble(line[2]);
 
-                Mockito.when(tf.compute(x * Math.PI / y, 0.001)).thenReturn(res);
+                Mockito.when(ts.compute(x * Math.PI / y, 0.001)).thenReturn(res);
             }
         }
     }
@@ -45,48 +45,52 @@ public class TrigonometricSolverTest {
         try (CSVReader csvReader = new CSVReader(new FileReader("src/test/resources/trigonometryTestData/test-cos-data.csv"))) {
             List<String[]> lines = csvReader.readAll();
             for (String[] line : lines) {
-                double x = Double.parseDouble(line[0]);
-                double y = Double.parseDouble(line[1]);
+                double n = Double.parseDouble(line[0]);
+                double k = Double.parseDouble(line[1]);
                 double res = Double.parseDouble(line[2]);
 
-                Mockito.when(tf.compute(x * Math.PI / y, 0.001)).thenReturn(res);
+                Mockito.when(tf.compute(n * Math.PI / k, 0.001)).thenReturn(res);
             }
         }
     }
 
-    private void runTest(TrigonometricSolver ts, Double divisible, Double divider, Double trueResult) {
-        double x = divisible * Math.PI / divider;
+    private void execute(TrigonometricSolver ts, Double n, Double k, Double trueResult) {
+        double arg = calcArg(n, k);
         double result;
         try {
-            result = ts.compute(x, 0.001);
-            csvOutput.logging(x, result);
+            result = ts.compute(arg, 0.001);
+            csvOutput.logging(arg, result);
             assertEquals(trueResult, result, 0.001);
         } catch (ArithmeticException e) {
-            assertEquals("Wrong x", e.getMessage());
+            assertEquals("Неверный аргумент x", e.getMessage());
         }
     }
 
     @ParameterizedTest
     @CsvFileSource(resources = "/trigonometryTestData/test-trig-func-data.csv")
-    void isolatedFunctionTest(Double divisible, Double divider, Double trueResult) {
+    void isolatedFunctionTest(Double n, Double k, Double expected) {
         csvOutput.setFilePath("src/test/resources/result/equation/trigonometrySolverAnswer.csv");
         TrigonometricSolver trigonometricExpression = new TrigonometricSolver(cos);
-        runTest(trigonometricExpression, divisible, divider, trueResult);
+        execute(trigonometricExpression, n, k, expected);
     }
 
     @ParameterizedTest
     @CsvFileSource(resources = "/trigonometryTestData/test-trig-func-data.csv")
-    void cosTest(Double divisible, Double divider, Double trueResult) {
+    void cosTest(Double n, Double k, Double expected) {
         csvOutput.setFilePath("src/test/resources/result/equation/trigonometrySolverAnswer.csv");
         TrigonometricSolver trigonometricExpression = new TrigonometricSolver(new Cos(sin));
-        runTest(trigonometricExpression, divisible, divider, trueResult);
+        execute(trigonometricExpression, n, k, expected);
     }
 
     @ParameterizedTest
     @CsvFileSource(resources = "/trigonometryTestData/test-trig-func-data.csv")
-    void fullTest(Double divisible, Double divider, Double trueResult) {
+    void fullTest(Double n, Double k, Double expected) {
         csvOutput.setFilePath("src/test/resources/result/equation/trigonometrySolverAnswer.csv");
         TrigonometricSolver trigonometricExpression = new TrigonometricSolver(new Cos(new Sin()));
-        runTest(trigonometricExpression, divisible, divider, trueResult);
+        execute(trigonometricExpression, n, k, expected);
+    }
+
+    private static double calcArg(Double n, Double k) {
+        return n * Math.PI / k;
     }
 }
