@@ -1,9 +1,9 @@
 package logarithm;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
+import org.mockito.Mockito;
 import utils.CsvOutput;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -11,12 +11,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class Log3Test extends LnTest {
     private static final CsvOutput csvOutput = new CsvOutput();
-    private static Log3 log3;
+    private static final Log3 log3 = new Log3(new Ln());
+    private static final Ln lnMock = Mockito.mock(Ln.class);
+    private static final Log3 log3Mock = new Log3(lnMock);
 
-    @BeforeAll
-    public static void init() {
-        log3 = new Log3(new Ln());
-    }
 
     @Test
     void checkLn_OK() {
@@ -47,5 +45,18 @@ class Log3Test extends LnTest {
         csvOutput.logging(x, result);
 
         assertEquals(trueResult, result, eps);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/logarithm/lnMockData.csv")
+    void setLnMock_OK(Double x, Double lnResult, Double log3Result) {
+        double eps = 0.001;
+        csvOutput.setFilePath("src/test/resources/result/logarithm/log3MockAnswers.csv");
+
+        Mockito.when(lnMock.compute(x, eps)).thenReturn(lnResult);
+        double result = log3Mock.compute(x, eps);
+        csvOutput.logging(x, result);
+
+        assertEquals(log3Result, result, eps);
     }
 }

@@ -22,6 +22,12 @@ public class CsvOutput {
 
     @SneakyThrows
     public void logging(double x, double y) {
+        File file = new File(filePath);
+        File parentDir = file.getParentFile();
+        if (!parentDir.exists()) {
+            parentDir.mkdirs();
+        }
+
         try (PrintStream printStream = new PrintStream(new FileOutputStream(filePath, true))) {
             printStream.printf("%s, %s\n", x, y);
         }
