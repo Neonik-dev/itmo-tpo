@@ -11,26 +11,19 @@ public class Sin {
 
         x %= 2 * PI;
 
-        if (x == 0 || x == PI) {
+        if (Math.abs(x) == 0 || Math.abs(x) == PI) {
             return 0d;
         }
 
         double res = x;
+        double term = x;
         int k = 3;
-        double pow = Math.pow(x, 3);
         int sign = -1;
-        long fact = 6;
 
-        while (true) {
-            double curTerm = (sign * pow) / fact;
-            if (Math.abs(curTerm) < eps) {
-                break;
-            }
-
-            res += curTerm;
-            sign = -sign;
-            fact *= (long) (k + 1) * (k + 2);
-            pow *= Math.pow(x, 2);
+        while (Math.abs(term) >= eps) {
+            term *= x * x / (k * (k - 1)); // корректное обновление текущего слагаемого
+            res += sign * term;
+            sign *= -1;
             k += 2;
         }
 

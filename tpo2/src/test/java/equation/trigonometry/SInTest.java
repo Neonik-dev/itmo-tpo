@@ -26,24 +26,25 @@ public class SInTest {
     }
 
     @Test
-    void checkSin_OK() {
-        double delta = 0.01;
+    void checkZeroValues_OK() {
         double eps = 0.001;
         assertAll(
-                () -> assertEquals(0, sin.compute(1, eps)),
-                () -> assertEquals(2.302585, sin.compute(10, eps), delta),
-                () -> assertEquals(2.70805, sin.compute(15, eps), delta),
-                () -> assertEquals(1, sin.compute(Math.E, eps), delta)
+                () -> assertEquals(0, sin.compute(-Math.PI, eps)),
+                () -> assertEquals(0, sin.compute(-2 * Math.PI, eps)),
+                () -> assertEquals(0, sin.compute(-3 * Math.PI, eps)),
+                () -> assertEquals(0, sin.compute(-4 * Math.PI, eps))
         );
     }
 
     @Test
-    public void checkZeroValues_OK() {
+    public void checkSin_OK() {
+        double eps = 0.001;
         assertAll(
-                () -> assertThrows(IllegalArgumentException.class, () -> sin.compute(2, 0.001)),
-                () -> assertThrows(IllegalArgumentException.class, () -> sin.compute(Double.NaN, 0.001)),
-                () -> assertThrows(IllegalArgumentException.class, () -> sin.compute(Double.NEGATIVE_INFINITY, 0.001)),
-                () -> assertThrows(IllegalArgumentException.class, () -> sin.compute(Double.POSITIVE_INFINITY, 0.001))
+                () -> assertEquals(0.5, sin.compute(Math.PI / 6 - 2 * Math.PI, eps), eps),
+                () -> assertEquals(-1, sin.compute(Math.PI / 2 - Math.PI, eps), eps),
+                () -> assertEquals(1, sin.compute(Math.PI / 2 - 2 * Math.PI, eps), eps),
+                () -> assertEquals(0.7071067811865475, sin.compute(Math.PI / 4 - 2 * Math.PI, eps), eps),
+                () -> assertEquals(0.8660254037844386, sin.compute(Math.PI / 3 - 2 * Math.PI, eps), eps)
         );
     }
 
