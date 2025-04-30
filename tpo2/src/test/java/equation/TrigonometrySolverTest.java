@@ -25,7 +25,7 @@ public class TrigonometrySolverTest {
     }
 
     private static void fillMockSin(Sin tf) {
-        try (CSVReader csvReader = new CSVReader(new FileReader("src/test/resources/inputTrig/sinData.csv"))) {
+        try (CSVReader csvReader = new CSVReader(new FileReader("src/test/resources/trigonometryTestData/test-sin-data.csv"))) {
             List<String[]> lines = csvReader.readAll();
             for (String[] line : lines) {
                 double x = Double.parseDouble(line[0]);
@@ -42,7 +42,7 @@ public class TrigonometrySolverTest {
     }
 
     private static void fillMockCos(Cos tf) {
-        try (CSVReader csvReader = new CSVReader(new FileReader("src/test/resources/inputTrig/cosData.csv"))) {
+        try (CSVReader csvReader = new CSVReader(new FileReader("src/test/resources/trigonometryTestData/test-cos-data.csv"))) {
             List<String[]> lines = csvReader.readAll();
             for (String[] line : lines) {
                 double x = Double.parseDouble(line[0]);
@@ -69,15 +69,15 @@ public class TrigonometrySolverTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/inputTrig/trigFuncData.csv")
-    void allMockTest(Double divisible, Double divider, Double trueResult) {
+    @CsvFileSource(resources = "/trigonometryTestData/test-trig-func-data.csv")
+    void isolatedFunctionTest(Double divisible, Double divider, Double trueResult) {
         TrigonometricSolver trigonometricExpression
                 = new TrigonometricSolver(cos);
         runTest(trigonometricExpression, divisible, divider, trueResult);
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/inputTrig/trigFuncData.csv")
+    @CsvFileSource(resources = "/trigonometryTestData/test-trig-func-data.csv")
     void cosTest(Double divisible, Double divider, Double trueResult) {
         TrigonometricSolver trigonometricExpression
                 = new TrigonometricSolver(new Cos(sin));
@@ -85,7 +85,7 @@ public class TrigonometrySolverTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/inputTrig/trigFuncData.csv")
+    @CsvFileSource(resources = "/trigonometryTestData/test-trig-func-data.csv")
     void fullTest(Double divisible, Double divider, Double trueResult) {
         TrigonometricSolver trigonometricExpression
                 = new TrigonometricSolver(new Cos(new Sin()));
