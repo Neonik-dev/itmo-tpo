@@ -6,13 +6,13 @@ public class Cos {
     private static final double TWO_PI = 2 * PI;
     private final Sin sin;
 
-    public Cos() {
-        this.sin = new Sin();
+    public Cos(Sin sin) {
+        this.sin = sin;
     }
 
     public double compute(double x, double eps) {
         if (!validX(x)) {
-            throw new ArithmeticException("Неверный аргумент x");
+            throw new IllegalArgumentException("Неверный аргумент x");
         }
 
         x %= TWO_PI;
@@ -35,7 +35,7 @@ public class Cos {
     }
 
     public boolean validX(double x) {
-        if (!(Double.isNaN(x) || Double.isInfinite(x))) {
+        if (Double.isNaN(x) || Double.isInfinite(x)) {
             return false;
         }
         return x <= 0;

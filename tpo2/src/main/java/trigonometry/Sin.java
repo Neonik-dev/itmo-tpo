@@ -6,7 +6,7 @@ public class Sin {
 
     public double compute(double x, double eps) {
         if (!validX(x)) {
-            throw new ArithmeticException("Неверный аргумент x");
+            throw new IllegalArgumentException("Неверный аргумент x");
         }
 
         x %= 2 * PI;
@@ -19,7 +19,7 @@ public class Sin {
         int k = 3;
         double pow = Math.pow(x, 3);
         int sign = -1;
-        long fact = 6; // 3! = 6
+        long fact = 6;
 
         while (true) {
             double curTerm = (sign * pow) / fact;
@@ -29,8 +29,8 @@ public class Sin {
 
             res += curTerm;
             sign = -sign;
-            fact *= (long) (k + 1) * (k + 2); // (k+1)*(k+2) на следующую итерацию
-            pow *= Math.pow(x, 2); // x^(k+2)
+            fact *= (long) (k + 1) * (k + 2);
+            pow *= Math.pow(x, 2);
             k += 2;
         }
 
@@ -38,7 +38,7 @@ public class Sin {
     }
 
     public boolean validX(double x) {
-        if (!(Double.isNaN(x) || Double.isInfinite(x))) {
+        if (Double.isNaN(x) || Double.isInfinite(x)) {
             return false;
         }
         return x <= 0;
