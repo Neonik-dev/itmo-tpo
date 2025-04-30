@@ -13,13 +13,6 @@ public class CsvOutput {
         this.filePath = fileName;
     }
 
-//    @SneakyThrows
-//    public void clearFile() {
-//        try (PrintWriter writer = new PrintWriter(filePath)) {
-//            writer.print("");
-//        }
-//    }
-
     @SneakyThrows
     public void logging(double x, double y) {
         File file = new File(filePath);
