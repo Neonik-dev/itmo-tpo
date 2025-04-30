@@ -2,10 +2,15 @@ package logarithm;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import utils.CsvOutput;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class Log3Test extends LnTest {
+    private static final CsvOutput csvOutput = new CsvOutput();
     private static Log3 log3;
 
     @BeforeAll
@@ -30,5 +35,17 @@ class Log3Test extends LnTest {
                 () -> assertEquals(8.07497, log3.compute(34234893284.23423, eps), eps),
                 () -> assertEquals(7.15449, log3.compute(4343, eps), eps)
         );
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/logarithm/log3Data.csv")
+    void sequenceFromFile_OK(Double x, Double trueResult) {
+        double eps = 0.001;
+        csvOutput.setFilePath("src/test/resources/result/logarithm/log3Answers.csv");
+
+        double result = log3.compute(x, eps);
+        csvOutput.logging(x, result);
+
+        assertEquals(trueResult, result, eps);
     }
 }
