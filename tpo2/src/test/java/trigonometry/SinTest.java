@@ -1,13 +1,11 @@
-package equation.trigonometry;
+package trigonometry;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import trigonometry.Sin;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SInTest {
+public class SinTest {
     private static Sin sin;
 
     @BeforeEach
@@ -47,5 +45,4 @@ public class SInTest {
                 () -> assertEquals(0.8660254037844386, sin.compute(Math.PI / 3 - 2 * Math.PI, eps), eps)
         );
     }
-
 }

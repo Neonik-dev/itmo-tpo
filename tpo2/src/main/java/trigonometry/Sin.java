@@ -21,7 +21,7 @@ public class Sin {
         int sign = -1;
 
         while (Math.abs(term) >= eps) {
-            term *= x * x / (k * (k - 1)); // корректное обновление текущего слагаемого
+            term *= x * x / (k * (k - 1));
             res += sign * term;
             sign *= -1;
             k += 2;

@@ -1,7 +1,5 @@
-package equation.logarithm;
+package logarithm;
 
-import logarithm.Ln;
-import logarithm.Log3;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

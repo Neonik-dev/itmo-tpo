@@ -1,6 +1,5 @@
-package equation.logarithm;
+package logarithm;
 
-import logarithm.Ln;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

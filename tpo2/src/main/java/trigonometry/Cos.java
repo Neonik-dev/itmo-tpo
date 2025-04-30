@@ -16,13 +16,8 @@ public class Cos {
         }
 
         x %= TWO_PI;
-        if (x <= -PI) {
-            x += TWO_PI;
-        } else if (x > PI) {
-            x -= TWO_PI;
-        }
 
-        if (x == PI / 2 || x == -PI / 2) {
+        if (Math.abs(x) == PI / 2 || Math.abs(x) == 3 * PI / 2) {
             return 0d;
         }
 
