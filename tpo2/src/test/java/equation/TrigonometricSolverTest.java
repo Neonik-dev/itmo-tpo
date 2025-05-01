@@ -69,7 +69,7 @@ public class TrigonometricSolverTest {
     @ParameterizedTest
     @CsvFileSource(resources = "/trigonometryTestData/test-trig-func-data.csv")
     void isolatedFunctionTest(Double n, Double k, Double expected) {
-        csvOutput.setFilePath("src/test/resources/result/equation/trigonometrySolverAnswer.csv");
+        csvOutput.setFilePath("src/test/resources/result/equation/trigonometrySolverAnswerIsolated.csv");
         TrigonometricSolver trigonometricExpression = new TrigonometricSolver(cos);
         execute(trigonometricExpression, n, k, expected);
     }
@@ -77,7 +77,7 @@ public class TrigonometricSolverTest {
     @ParameterizedTest
     @CsvFileSource(resources = "/trigonometryTestData/test-trig-func-data.csv")
     void cosTest(Double n, Double k, Double expected) {
-        csvOutput.setFilePath("src/test/resources/result/equation/trigonometrySolverAnswer.csv");
+        csvOutput.setFilePath("src/test/resources/result/equation/trigonometrySolverAnswerCos.csv");
         TrigonometricSolver trigonometricExpression = new TrigonometricSolver(new Cos(sin));
         execute(trigonometricExpression, n, k, expected);
     }
@@ -85,7 +85,7 @@ public class TrigonometricSolverTest {
     @ParameterizedTest
     @CsvFileSource(resources = "/trigonometryTestData/test-trig-func-data.csv")
     void fullTest(Double n, Double k, Double expected) {
-        csvOutput.setFilePath("src/test/resources/result/equation/trigonometrySolverAnswer.csv");
+        csvOutput.setFilePath("src/test/resources/result/equation/trigonometrySolverAnswerFull.csv");
         TrigonometricSolver trigonometricExpression = new TrigonometricSolver(new Cos(new Sin()));
         execute(trigonometricExpression, n, k, expected);
     }

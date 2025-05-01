@@ -24,7 +24,7 @@ public class Cos {
         double sinX = sin.compute(x, eps);
         double res = Math.sqrt(1 - Math.pow(sinX, 2));
 
-        boolean isNegative = (x > PI / 2 && x <= PI) || (x < -PI / 2 && x >= -PI);
+        boolean isNegative = (x > PI / 2 && x <= PI) || (x < -PI / 2 && x >= -PI) || (x >= PI && x <= 3 * PI / 2) || (x <= -PI && x > -3 * PI / 2);
 
         return isNegative ? -res : res;
     }

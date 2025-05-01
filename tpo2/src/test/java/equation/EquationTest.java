@@ -18,7 +18,6 @@ public class EquationTest {
     private static final TrigonometricSolver trigonometricSolver = new TrigonometricSolver(new Cos(new Sin()));
     private static final TrigonometricSolver trigonometricSolverMock = Mockito.mock(TrigonometricSolver.class);
 
-
     @ParameterizedTest
     @CsvFileSource(resources = "/equation/equationData.csv")
     void fullFromFile_OK(Double x, Double y, Double trueResult) {
